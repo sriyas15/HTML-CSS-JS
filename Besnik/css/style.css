@@ -1,0 +1,295 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+main{
+    background: url("../image/bg.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+header{
+    padding: 20px 0px;
+}
+
+.container{
+    max-width: 1125px;
+    margin: 0px auto;
+}
+
+.header-wrapper{
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.header-wrapper nav{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.header-wrapper nav a{
+    text-decoration: none;
+    color: white;
+}
+
+.br{
+    display: block;
+}
+
+.banner-wrapper{
+    text-align: center;
+    padding: 100px 0px;
+
+}
+
+.banner-wrapper h1{
+    color: white;
+    font-size: 94px;
+}
+
+.banner-wrapper p{
+    color: white;
+    margin: 65px 0px 75px 0px;
+}
+
+.banner-wrapper a{
+    display: inline-flex;
+    text-decoration: none;
+    background-color: #231A36;
+    color: white;
+    border-radius: 50px;
+    padding: 20px 30px;
+}
+
+.clients .container h6{
+    font-size: 16px;
+    color: #B2B7BE;
+    margin: 30px 0px;
+    text-align: center;
+}
+
+.clients-wrapper{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0px;
+    gap: 20px;
+}
+
+.solution>div{
+    margin: 20px;
+    text-align: center;
+}
+
+.solution .sec-heading h2{
+    font-size: 40px;
+    margin: 20px;
+}
+
+.solution .sec-heading p{
+    color: #426666;
+    line-height: 20px;
+}
+
+.solution-wrapper{
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+    padding: 30px 0px;
+
+}
+
+.solution-wrapper > div{
+    width: 50%;
+}
+
+.solution .container{
+    max-width: 750px;
+}
+
+.solution-wrapper a{
+    color: #42424A;
+    text-decoration: none;
+    margin: 20px;
+    padding: 10px;
+}
+
+.solution{
+    background-color: #EBEBEB;
+    padding: 100px 0px;
+}
+
+.solution-wrapper > div:last-child{
+    text-align: right;
+}
+
+.solution-wrapper:not(:last-child){
+    margin-bottom: 50px;
+}
+
+.solution .container >div:nth-child(2)>div:first-child{
+    order: 2;
+}
+
+.solution .container >div:nth-child(2)>div:last-child{
+    order: 1;
+}
+
+.data-wrapper{
+    text-align: center;
+    padding: 30px;
+    margin: 20px 0px;
+}
+
+.data-wrapper h2{
+    color: white;
+    margin-top: 30px;
+}
+
+.data-wrapper p{
+    color: #7B9292;
+    margin-top: 10px;
+}
+
+.data-number{
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0px;
+    padding: 30px;
+}
+
+.data{
+    background-color: #231A36;
+}
+
+.happy .sec-heading{
+    text-align: center;
+    margin-top: 50px;
+    padding: 30px;
+}
+
+.happy .sec-heading p{
+    margin: 10px;
+    color: #426666;
+}
+
+.happy-wrapper{
+    display: flex;
+    align-items: center;
+}
+
+.happy-wrapper>div{
+    width: 50%;
+}
+
+.happy-wrapper>div:last-child{
+    text-align: right;
+}
+
+.happy-wrapper h4{
+    margin-top: 30px;
+}
+
+.happy-wrapper p{
+    font-size: 22px;
+    color: #6D6D6D;
+}
+
+.happy-wrapper h6{
+    color: #9C988F;
+}
+
+.subscribe .container{
+    max-width: 976px;
+    max-height: 576px;
+    text-align: center;
+    margin-top: 50px;
+    padding: 100px;
+    background: url("./bg2.svg");
+    background-repeat: no-repeat;
+}
+.subscribe .container h2{
+    margin-bottom: 20px;
+    font-size: 40px;
+    color: white;
+}
+.subscribe .container p{
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+.subscribe .container a{
+    display: inline-flex;
+    background-color: #231A36;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    
+    padding: 20px;
+}
+.last-wrapper{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 50px;
+}
+
+.last-wrapper a{
+    text-decoration: none;
+    color: #333333;
+}
+.last-wrapper nav{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+footer p{
+    text-align: center;
+    color: #959595;
+    margin: 20px 0px;
+}
+
+
+@media only screen and (max-width: 786px) {
+  .header-wrapper{
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .banner-wrapper h1{
+    font-size: 80px;
+  }
+  .solution .container>div{
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0px;
+  }
+  .data-number{
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 866px) {
+  .clients-wrapper {
+    flex-wrap: wrap; 
+    
+  }
+}
+
+@media only screen and (max-width: 1160px) {
+  .happy-wrapper{
+    flex-direction: column;
+    align-items: center;
+  }
+  
+}
+
+@media only screen and (max-width: 1065px) {
+  .subscribe .container{
+    max-width: fit-content;
+    max-height: fit-content;
+  }
+  
+}
