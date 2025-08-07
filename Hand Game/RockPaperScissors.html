@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+
+    <title>Rock Paper Scissor</title>
+</head>
+<body>
+
+    <div class="container my-4">
+
+        <h1>Stone Paper Scissor Game</h1>
+
+    <button class="btn btn-outline-dark" onclick="
+    
+    let game='';
+    player='rock';
+    computerSelects=Math.floor(Math.random() * 3);
+    gameMode(player);
+    ">
+        Rock
+    </button>
+
+    <button class="btn btn-outline-dark" onclick="
+    
+    player='paper';
+    computerSelects=Math.floor(Math.random() * 3);
+    gameMode(player);
+    ">
+        Paper
+    </button>
+
+    <button class="btn btn-outline-dark" onclick="
+    computerSelects=Math.floor(Math.random() * 3);
+    player='scissor';
+    gameMode(player);
+    ">
+        Scissor
+    </button>
+
+    <button class="btn btn-outline-danger" onclick="
+        score.wins=0;
+        score.losses=0;
+        score.ties=0;
+        alert(`Game has been reseted`);
+    ">
+        Reset
+    </button>
+
+    </div>
+
+
+
+<script>
+    let player='';
+    let score={
+        wins:0,
+        losses:0,
+        ties:0
+    };
+    function gameMode(player){
+
+        if(player==='rock'){
+            if(computerSelects==0){
+                score.ties+=1;
+        console.log('Tie...');
+        score.ties+=1;
+        game='Tie';
+        computerChooseInWords='Rock';
+    }else if(computerSelects==1){
+        console.log('You Lose');
+        score.losses+=1;
+        game='Lost';
+        computerChooseInWords='Paper';
+    }else{
+        console.log('You win...');
+        score.wins+=1;
+        game='Won';
+        computerChooseInWords='Scissors';
+    }
+    alert(`You choosed Rock and Computer choosed ${computerChooseInWords}
+            Game ${game}
+            Wins:${score.wins} Losses:${score.losses} Ties:${score.ties}`);
+
+        }
+        else if(player==='paper'){
+
+            if(computerSelects==0){
+        console.log('Won');
+        score.wins+=1;
+        game='Won';
+        computerChooseInWords='Rock';
+    }else if(computerSelects==1){
+        score.ties+=1;
+        console.log('Tie...');
+        game='Tie';
+        computerChooseInWords='Paper';
+    }else{
+        console.log('You Lost');
+        score.losses+=1;
+        game='Lost';
+        computerChooseInWords='Scissors';
+    }
+    alert(`You choosed Rock and Computer choosed ${computerChooseInWords}
+            Game ${game}
+            Wins:${score.wins} Losses:${score.losses} Ties:${score.ties}`);
+
+
+        }else if(player==='scissor'){
+
+            if(computerSelects==0){
+        console.log('Won');
+        score.losses+=1;
+        game='Lost';
+        computerChooseInWords='Rock';
+    }else if(computerSelects==1){
+        console.log('Tie...');
+        score.wins+=1;
+        game='Won';
+        computerChooseInWords='Paper';
+    }else{
+        console.log('You Lost');
+        score.ties+=1;
+        game='Tie...';
+        computerChooseInWords='Scissors';
+    }
+    alert(`You choosed Rock and Computer choosed ${computerChooseInWords}
+            Game ${game}
+            Wins:${score.wins} Losses:${score.losses} Ties:${score.ties}`);
+        }
+
+    }
+
+</script>
+</body>         
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1{
+            background-color: aqua;
+            
+        }
+    </style>
+</head>
+<body>
+    
+    
+     <h1 class="name">Mohamed Riyas</h1>
+     <p>Amazon Shipping Details $</p>
+     <p>If above 40$ Free Shipping</p>
+     <p>Within 40$ - 25$ Shipping Free</p>
+     <p class="final"></p>
+
+     <input type="number" placeholder="Check here" class="input-box">
+     <button
+     onclick="
+     let inputValue=document.querySelector('.input-box');
+    let cost=Number(inputValue.value);
+    let finalText=document.querySelector('.final');
+    console.log(inputValue.value);
+
+    if(cost<=40){
+        cost+=25;
+        // finalText=inputValue;
+        finalText.innerHTML=`Your total is ${cost}$`;
+    }else{
+
+        finalText.innerHTML=`You are free of shipping charges, your total is only ${cost}$`;
+
+    }
+     "
+     class="btn"
+     >Check</button>
+     
+
+<script>
+    
+    
+
+    
+</script>
+</body>
+</html>
