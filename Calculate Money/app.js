@@ -1,5 +1,6 @@
 // ITEM controller, App Controller, Model Controller
 
+let alertDiv = document.querySelector("#alert-div");
 
 //Item Controller
 const Item = (function Items(){
@@ -71,7 +72,7 @@ const Item = (function Items(){
         },
 
         setItems : function(setItem){
-            data.currentItem=setItem;
+            data.currentItem = setItem;
         },
 
         getCurrentItems : function(){
@@ -86,6 +87,25 @@ const Item = (function Items(){
             const index = ids.indexOf(id);
             data.items.splice(index,1);
         },
+
+        updateItems : function(){
+            const currentItem = data.currentItem;
+            const newName = document.querySelector("#item-name").value;
+            const newMoney = parseInt(document.querySelector("#money").value);
+
+            let updated = null;
+
+            data.items.forEach(item => {
+                if (item.id === currentItem.id) {
+                    item.name = newName;
+                    item.money = newMoney;
+                    updated = item;
+                }
+    });
+
+    return updated;
+}
+,
 
         clearItems: () => {
         data.items = []; // This clears the original array
@@ -118,57 +138,79 @@ const Ui = (function Ui(){
     html.innerHTML=htmlData;
 },
 
-        clearState : function(){
-                document.querySelector(".add-btn").style.display="inline"
-                document.querySelector(".update-btn").style.display="none";
-                document.querySelector(".delete-btn").style.display="none"
-                document.querySelector(".back-btn").style.display="none"
-        },
+    clearState : function(){
+            document.querySelector(".add-btn").style.display="inline"
+            document.querySelector(".update-btn").style.display="none";
+            document.querySelector(".delete-btn").style.display="none"
+            document.querySelector(".back-btn").style.display="none"
+    },
 
-        showState : function(){
-                document.querySelector(".add-btn").style.display="none"
-                document.querySelector(".update-btn").style.display="inline";
-                document.querySelector(".delete-btn").style.display="inline"
-                document.querySelector(".back-btn").style.display="inline"
-        },
+    showState : function(){
+            document.querySelector(".add-btn").style.display="none"
+            document.querySelector(".update-btn").style.display="inline";
+            document.querySelector(".delete-btn").style.display="inline"
+            document.querySelector(".back-btn").style.display="inline"
+    },
 
-        newItemsToUi : function(newItemtoUi){
+    newItemsToUi : function(newItemtoUi){
 
-            const ul = document.querySelector("#group-item");
+        const ul = document.querySelector("#group-item");
 
-            let newElement = document.createElement("li");
-            newElement.className="collection";
-            newElement.id=`item-${newItemtoUi.id}`;
+        let newElement = document.createElement("li");
+        newElement.className="collection";
+        newElement.id=`item-${newItemtoUi.id}`;
 
-            newElement.innerHTML=`
-            
-            <strong>${newItemtoUi.name} :</strong>
-            <em>${newItemtoUi.money} rs</em>
-            <a href="#" class="secondary-content edit">
-                <i class="fa-solid fa-pen-to-square"></i>
-            </a>
+        newElement.innerHTML=`
+        
+        <strong>${newItemtoUi.name} :</strong>
+        <em>${newItemtoUi.money} rs</em>
+        <a href="#" class="secondary-content edit">
+            <i class="fa-solid fa-pen-to-square"></i>
+        </a>
 
-            `
-            ul.appendChild(newElement);
-        },
+        `
+        ul.appendChild(newElement);
+    },
 
-        showTotalMoney : function(totalMoney){
-            document.querySelector("#total-money").innerText = totalMoney;
-        },
+    showTotalMoney : function(totalMoney){
+        document.querySelector("#total-money").innerText = totalMoney;
+    },
 
-        deleteListItem : function(id){
+    deleteListItem : function(id){
 
-            const itemId = `#item-${id}`;
-            const item = document.querySelector(itemId);
-            item.remove();
+        const itemId = `#item-${id}`;
+        const item = document.querySelector(itemId);
+        item.remove();
+        M.toast({
+            html: "Item Deleted Successfully!",
+            classes: "green darken-1 white-text rounded"
+        });
+        let itemName= document.querySelector("#item-name");
+        let money= document.querySelector("#money");
 
-        },
+        itemName.value="";
+        money.value="";
 
-        addCurrentItem : function(){
-            document.querySelector("#item-name").value=Item.getCurrentItems().name;
-            document.querySelector("#money").value=Item.getCurrentItems().money;
-        }
-    }
+    },
+
+    addCurrentItem : function(){
+        document.querySelector("#item-name").value=Item.getCurrentItems().name;
+        document.querySelector("#money").value=Item.getCurrentItems().money;
+    },
+
+    showUpdatedItem : function(updated){
+    let list = document.getElementById(`item-${updated.id}`);
+    
+    list.innerHTML = `
+        <strong>${updated.name} :</strong>
+        <em>${updated.money} rs</em>
+        <a href="#" class="secondary-content edit">
+            <i class="fa-solid fa-pen-to-square"></i>
+        </a>
+    `
+}
+
+}
 
 })();
 
@@ -191,6 +233,26 @@ const App = (function App(){
 
         const backBtn = document.querySelector(".back-btn");
         backBtn.addEventListener("click",getBack);
+
+        const updateBtn = document.querySelector(".update-btn");
+        updateBtn.addEventListener("click",updateFunction);
+    }
+
+    const updateFunction = function(){
+
+        const updated = Item.updateItems();
+        //Getting total calculated money from ItemCtrl
+        const totMoney = Item.totalMoney();
+        Ui.showTotalMoney(totMoney);//Showing total money in Ui
+        Ui.showUpdatedItem(updated);
+
+        M.toast({
+    html: "Item Updated Successfully!",
+    classes: "blue darken-1 white-text rounded"
+});
+
+
+        
     }
 
     const getBack = function(){
@@ -228,6 +290,16 @@ const App = (function App(){
         //Getting total calculated money from ItemCtrl
         const totMoney = Item.totalMoney();
         Ui.showTotalMoney(totMoney);//Showing total money in Ui
+
+        M.toast({
+                html: "Cleared All Items",
+                classes: "green darken-1 white-text rounded"
+            });
+        let itemName= document.querySelector("#item-name");
+        let money= document.querySelector("#money");
+
+        itemName.value="";
+        money.value="";
     }
     
 
@@ -243,16 +315,25 @@ const App = (function App(){
     ];
 
         if(itemName.value ==="" || money.value===""){   
-            alert(`Please Enter All fields`);
+            M.toast({
+                html: "⚠️ Please enter all fields!",
+                classes: "red darken-1 white-text rounded"
+            });
         }else{
             const items = Item.getList(list);
+            M.toast({
+            html: "Added Successfully!",
+            classes: "green white-text rounded"
+        });
         }
         itemName.value="";
         money.value="";
 
      //Getting total calculated money from ItemCtrl
         const totMoney = Item.totalMoney();
-        Ui.showTotalMoney(totMoney);//Showing total money in Ui   
+        Ui.showTotalMoney(totMoney);//Showing total money in Ui 
+        
+        
 }
 
     const editClick = function(e) {
