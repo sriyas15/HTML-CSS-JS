@@ -1,0 +1,139 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+a{
+    text-decoration: none;
+}
+
+.text-break{
+    display: block;
+    font-weight: bold;
+}
+
+.txt-break{
+    display: block;
+}
+
+.container{
+    max-width: 1400px;
+    margin: 0px auto;
+}
+
+.head{
+    background-color: #131921;
+}
+
+.header-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.header-wrapper nav a{
+    color: white;
+}
+
+.header-wrapper input[type=text]{
+    width: 700px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.header-wrapper input:focus{
+    border: 2px solid #FEBD68;
+    outline: none;
+}
+
+.header-wrapper > div{
+    display: flex;
+    align-items: center;
+}
+
+#head-nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+.header-wrapper button{
+    background-color: #FEBD68;
+    padding: 10px;
+}
+
+#span-color{
+    color: rgb(1, 124, 182);
+}
+
+#span-color:hover{
+    color: #C64F00;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+select{
+    display: block;
+    background-color: #F0F0F0;
+    padding: 10px;
+    border: none;
+    font-weight: 400;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-left: 5px;
+    margin: 10px 5px;
+}
+
+#buy-btn{
+    background-color: #F7CA00;
+    color: black;
+    border-radius: 20px;
+    padding: 5px 20px;
+    margin: 10px;
+}
+
+#product-image{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.products-wrapper > div h4{
+    font-weight: bold;
+    margin: 10px 5px;
+}
+
+.products-wrapper > div p{
+    margin: 10px 5px;
+}
+
+.products-wrapper > div button{
+    display: flex;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+}
+
+.products-wrapper{
+    display: flex;
+    margin-top: 30px;
+    padding-top: 40px;
+    padding-bottom: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
+    flex-wrap: wrap;
+}
+
+.products-wrapper > div{
+    border-right: 1px solid rgb(231, 231, 231);
+    border-bottom: 1px solid rgb(231, 231, 231);
+    padding: 10px;
+    width: 25%;
+}
+
+#ratings{
+    margin-left: 5px;
+}
