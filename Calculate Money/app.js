@@ -1,6 +1,53 @@
 // ITEM controller, App Controller, Model Controller
 
-let alertDiv = document.querySelector("#alert-div");
+//Storage Ctrl
+const StorageCtrl = (function Store(){
+
+    return {
+        getAddedItem : function(item){
+        
+            let task;
+
+            if(localStorage.getItem("task")===null){
+                task=[];
+                task.push(item);
+                localStorage.setItem("task",JSON.stringify(task));
+                
+            }
+            else{
+                task = JSON.parse(localStorage.getItem("task"));
+                task.push(item);
+                localStorage.setItem("task",JSON.stringify(task));
+                
+            }
+            return task;
+        },
+
+        getItemInStorage : function(){
+            let task;
+            if(localStorage.getItem("task")===null){
+                 task = [];
+            }
+            else{
+                task = JSON.parse(localStorage.getItem("task"));
+            }
+            return task;
+        },
+
+        deleteInStorage : function(id){
+            console.log(id);
+          let  task = JSON.parse(localStorage.getItem("task"));
+            console.log(task);
+            // task.forEach((item)=>{
+                // if(id===item.id){
+                //     task.splice(index,1);
+                // }
+                // console.log(item.id);
+            // })
+            // localStorage.setItem("task",JSON.stringify(task));
+        }
+    }
+})();
 
 //Item Controller
 const Item = (function Items(){
@@ -76,6 +123,7 @@ const Item = (function Items(){
         },
 
         getCurrentItems : function(){
+            StorageCtrl.getAddedItem(data.currentItem);
             return data.currentItem;
         },
 
@@ -119,11 +167,11 @@ const Ui = (function Ui(){
 
     return {
 
-    getItemsInUi : function(item){
+    getItemsInUi : function(items){
 
     const html=document.querySelector("#group-item");
     let htmlData ='';
-    item.forEach((item)=>{
+    items.forEach((item)=>{
         htmlData+=`
         <li class="collection-item" id="item-${item.id}">
             <strong>${item.name} :</strong>
@@ -274,6 +322,8 @@ const App = (function App(){
 
         Ui.deleteListItem(getCurrent.id);
 
+        StorageCtrl.deleteInStorage(getCurrent.id);
+
         //Getting total calculated money from ItemCtrl
         const totMoney = Item.totalMoney();
         Ui.showTotalMoney(totMoney);//Showing total money in Ui
@@ -308,10 +358,7 @@ const App = (function App(){
     let itemName= document.querySelector("#item-name");
     let money= document.querySelector("#money");
     const list =[
-        {
-            name : itemName.value,
-            amount : parseInt(money.value)
-        }
+        {name : itemName.value , amount : parseInt(money.value)}
     ];
 
         if(itemName.value ==="" || money.value===""){   
@@ -330,29 +377,28 @@ const App = (function App(){
         money.value="";
 
      //Getting total calculated money from ItemCtrl
-        const totMoney = Item.totalMoney();
-        Ui.showTotalMoney(totMoney);//Showing total money in Ui 
-        
-        
+    const totMoney = Item.totalMoney();
+    Ui.showTotalMoney(totMoney);//Showing total money in Ui 
+    StorageCtrl.getAddedItem(list);
 }
 
-    const editClick = function(e) {
-        if (e.target.closest(".edit")) {
-            console.log(e.target.parentElement.parentElement);
-            Ui.showState();
+const editClick = function(e) {
+    if (e.target.closest(".edit")) {
+        console.log(e.target.parentElement.parentElement);
+        Ui.showState();
 
-            //Gettind Items ID
-            const deleteList = e.target.parentElement.parentElement.id;
-            const split = deleteList.split("-");
-            const id = parseInt(split[1]);
-            
-            const itemToEdit = Item.itemEdit(id);
-            
-            Item.setItems(itemToEdit);
+        //Gettind Items ID
+        const deleteList = e.target.parentElement.parentElement.id;
+        const split = deleteList.split("-");
+        const id = parseInt(split[1]);
+        
+        const itemToEdit = Item.itemEdit(id);
+        
+        Item.setItems(itemToEdit);
 
-            Ui.addCurrentItem();
-        }
+        Ui.addCurrentItem();
     }
+}
 
     return {
         init: function(){
@@ -360,7 +406,6 @@ const App = (function App(){
             
             if(item.length > 0 ){
                 Ui.getItemsInUi(item);
-
                 //Getting total calculated money from ItemCtrl
                 const totMoney = Item.totalMoney();
                 Ui.showTotalMoney(totMoney);//Showing total money in Ui
