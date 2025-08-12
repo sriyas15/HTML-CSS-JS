@@ -1,420 +1,403 @@
-// ITEM controller, App Controller, Model Controller
+const StorageCtrl = (function Storage(){
 
-//Storage Ctrl
-const StorageCtrl = (function Store(){
+    return{
 
-    return {
-        getAddedItem : function(item){
+        storeInLs: function(item) { 
+            let task;
+            if (localStorage.getItem("task") === null) {
+                task = [];
+            } else {
+                task = JSON.parse(localStorage.getItem("task"));
+            }
+            task.push(item); 
+            localStorage.setItem("task", JSON.stringify(task));
+        },
+
+        loadInDOM : function(){
+            let task;
+            
+            if(localStorage.getItem("task")===null){
+                task = [];
+            }
+            else{
+                task = JSON.parse(localStorage.getItem("task"));
+                ItemCtrl.setItemsFromStorage(task);
+                UICtrl.loadFromStorage(task);
+            }
+        },
+
+        deleteFromStorage: function(deleted) {
+            let task = JSON.parse(localStorage.getItem("task")) || [];
+            deleted.forEach(dItem => {
+                task = task.filter(item => item.id !== dItem.id);
+            });
+            localStorage.setItem("task", JSON.stringify(task));
+        },
+
+        updateInStorage : function(updated){
         
-            let task;
-
-            if(localStorage.getItem("task")===null){
-                task=[];
-                task.push(item);
-                localStorage.setItem("task",JSON.stringify(task));
-                
-            }
-            else{
-                task = JSON.parse(localStorage.getItem("task"));
-                task.push(item);
-                localStorage.setItem("task",JSON.stringify(task));
-                
-            }
-            return task;
-        },
-
-        getItemInStorage : function(){
-            let task;
-            if(localStorage.getItem("task")===null){
-                 task = [];
-            }
-            else{
-                task = JSON.parse(localStorage.getItem("task"));
-            }
-            return task;
-        },
-
-        deleteInStorage : function(id){
-            console.log(id);
-          let  task = JSON.parse(localStorage.getItem("task"));
-            console.log(task);
-            // task.forEach((item)=>{
-                // if(id===item.id){
-                //     task.splice(index,1);
-                // }
-                // console.log(item.id);
-            // })
-            // localStorage.setItem("task",JSON.stringify(task));
+            let task = JSON.parse(localStorage.getItem("task")) || [];
+            let found;
+            task.forEach(item=>{
+                if(item.id === updated.id){
+                    console.log("Yes it is");
+                    found = updated;
+                    item.name = found.name;
+                    item.money = found.money;
+                }
+            })
+            localStorage.setItem("task", JSON.stringify(task));
         }
     }
+
 })();
 
-//Item Controller
-const Item = (function Items(){
-
+const ItemCtrl = (function Item(){
     const Item = function(id,name,money){
+        this.id = id;
+        this.name = name;
+        this.money = money;
+    };
 
-        this.id=id;
-        this.name=name;
-        this.money=money
-    }
+    const data = {
+        items : [
+            {id:0,name:"Dinner",money:110},
+            {id:1,name:"Shirt",money:750}
+        ],
+        currentItem : null,
+        totalMoney : 0
+    };
 
-    const data ={ 
-         items:   [
-            {id:0, name:"Bike", money:1000},
-            {id:1, name:"Car", money:10000},
-            {id:2, name:"Food", money:500}
-    ],
-            currentItem:null,
-            totalMoney:0
-        
-    }
-        return {
-            getItems: function(){
+    return {
+        getItems : function(){
             return data.items;
         },
-        
-        getList : function(items){
+
+        getNewItem : function(newItems){
 
             let ID;
-            if (data.items.length > 0) {
-                ID = data.items[data.items.length - 1].id + 1;
-            } else {
-                ID = 0;
-            }
-            items.forEach(function (item) {
-                const newItem = new Item(ID, item.name, item.amount);
-                data.items.push(newItem);
-                Ui.newItemsToUi(newItem);
-            });
+            let newList;
 
+            if(data.items.length>0){
+            ID = data.items[data.items.length-1].id+1;
+            }
+            else{    
+                ID=0;
+            }
+            newList = new Item(ID,newItems.name,newItems.money)
+            data.items.push(newList);
+            UICtrl.showAddedItems(newList);
+            
+            return newList;
         },
 
-        totalMoney : function(){
-
-            let total=0;
+        getMoney : function(){
+            let total = 0; 
             if(data.items.length>0){
-
-                data.items.forEach((item)=>{
-                    total+=item.money
-                })
+                data.items.forEach(item=>{
+                    total += parseInt(item.money) || 0;
+                });
             }else{
                 return data.totalMoney=0;
             }
+            data.totalMoney = total;
             return total;
         },
 
-        itemEdit : function(itemToEdit){
-
+        editItem : function(id){
             let found = null;
-
             data.items.forEach(item=>{
-                if(item.id===itemToEdit){
+
+                if(item.id === id){
                     found = item;
+                    document.querySelector("#item-name").value = item.name;
+                    document.querySelector("#money").value = item.money;
                 }
             })
-
             return found;
-
         },
 
-        setItems : function(setItem){
-            data.currentItem = setItem;
-        },
-
-        getCurrentItems : function(){
-            StorageCtrl.getAddedItem(data.currentItem);
+        setItem : function(current){
+            data.currentItem = current;
             return data.currentItem;
         },
 
-        deleteItem : function(id){
-            const ids = data.items.map(item=>{
-                return item.id
-            })
+        updateItem : function(updated){
 
-            const index = ids.indexOf(id);
-            data.items.splice(index,1);
+            const currentItem = data.currentItem;
+            let updateList;
+            updated.forEach(item=>{
+                currentItem.name = item.name;
+                currentItem.money = item.money;
+            })
+            UICtrl.showUpdatedList(data.currentItem);
+            StorageCtrl.updateInStorage(data.currentItem);
         },
 
-        updateItems : function(){
-            const currentItem = data.currentItem;
-            const newName = document.querySelector("#item-name").value;
-            const newMoney = parseInt(document.querySelector("#money").value);
+        deleteItem : function(){
+            let current = data.currentItem;
+            const index = data.items.findIndex(item => item.id === current.id);
+            let deleted;
+            if (index !== -1) {
+            deleted = data.items.splice(index, 1);
+            }
+            UICtrl.afterDeletedItem(deleted);
+            StorageCtrl.deleteFromStorage(deleted);
+        },
 
-            let updated = null;
+        clearAll : function(){
+            data.items= [];
+        },
 
-            data.items.forEach(item => {
-                if (item.id === currentItem.id) {
-                    item.name = newName;
-                    item.money = newMoney;
-                    updated = item;
-                }
-    });
-
-    return updated;
-}
-,
-
-        clearItems: () => {
-        data.items = []; // This clears the original array
-    }
-
+        setItemsFromStorage: function(itemsFromStorage) {
+            data.items = itemsFromStorage;
+        },
     }
 })();
 
-//Ui Controller
-const Ui = (function Ui(){
+const UICtrl = (function UI(){
 
-    return {
+    return{
 
-    getItemsInUi : function(items){
-
-    const html=document.querySelector("#group-item");
-    let htmlData ='';
-    items.forEach((item)=>{
-        htmlData+=`
-        <li class="collection-item" id="item-${item.id}">
-            <strong>${item.name} :</strong>
-            <em>${item.money} rs</em>
-            <a href="#" class="secondary-content edit">
-                <i class="fa-solid fa-pen-to-square"></i>
-            </a>
-        </li>
-    `
-    
-    })
-    html.innerHTML=htmlData;
-},
-
-    clearState : function(){
-            document.querySelector(".add-btn").style.display="inline"
-            document.querySelector(".update-btn").style.display="none";
-            document.querySelector(".delete-btn").style.display="none"
-            document.querySelector(".back-btn").style.display="none"
-    },
-
-    showState : function(){
-            document.querySelector(".add-btn").style.display="none"
-            document.querySelector(".update-btn").style.display="inline";
-            document.querySelector(".delete-btn").style.display="inline"
-            document.querySelector(".back-btn").style.display="inline"
-    },
-
-    newItemsToUi : function(newItemtoUi){
-
-        const ul = document.querySelector("#group-item");
-
-        let newElement = document.createElement("li");
-        newElement.className="collection";
-        newElement.id=`item-${newItemtoUi.id}`;
-
-        newElement.innerHTML=`
+        showItems : function(item){
         
-        <strong>${newItemtoUi.name} :</strong>
-        <em>${newItemtoUi.money} rs</em>
-        <a href="#" class="secondary-content edit">
-            <i class="fa-solid fa-pen-to-square"></i>
-        </a>
+        const ul = document.querySelector(".collection");
+        item.forEach(item=>{
+        
+            let li = document.createElement("li");
+            li.innerHTML=`
+            <li class="collection-item" id="item-${item.id}">
+                <strong>${item.name} :</strong>
+                <em>${item.money} rs</em>
+                <a href="#" class="secondary-content edit">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+            </li>
+            `
+            ul.appendChild(li);
+        })
+        },
 
-        `
-        ul.appendChild(newElement);
-    },
+        clearState : function(){
+        document.querySelector(".add-btn").style.display="inline";
+        document.querySelector(".update-btn").style.display="none";
+        document.querySelector(".delete-btn").style.display="none";
+        document.querySelector(".back-btn").style.display="none";
+        },
 
-    showTotalMoney : function(totalMoney){
-        document.querySelector("#total-money").innerText = totalMoney;
-    },
+        showState : function(){
+            document.querySelector(".add-btn").style.display="none";
+            document.querySelector(".update-btn").style.display="inline";
+            document.querySelector(".delete-btn").style.display="inline";
+            document.querySelector(".back-btn").style.display="inline";
+        },
 
-    deleteListItem : function(id){
+        showMoney : function(){
+        const money = document.querySelector("#total-money");
+        money.innerHTML=ItemCtrl.getMoney();
+        },
 
-        const itemId = `#item-${id}`;
-        const item = document.querySelector(itemId);
-        item.remove();
-        M.toast({
-            html: "Item Deleted Successfully!",
-            classes: "green darken-1 white-text rounded"
-        });
-        let itemName= document.querySelector("#item-name");
-        let money= document.querySelector("#money");
+        clearValues : function(){
+            const name = document.querySelector("#item-name");
+            const money = document.querySelector("#money");
+            name.value="";
+            money.value="";
+        },
 
-        itemName.value="";
-        money.value="";
+        showAddedItems : function(newList){
+            const name = document.querySelector("#item-name").value;
+            const money = document.querySelector("#money").value;
 
-    },
+            if(name==="" || money===""){
+                M.toast({
+                    html:"Please Enter All the details",
+                    classes: "red darken-1 white-text rounded" 
+                });
+            }
+            else{
+                let ul = document.querySelector("#group-item");
+                let addedList = document.createElement("li");
+                
+                addedList.innerHTML=`
+                    <li class="collection-item" id="item-${newList.id}">
+                    <strong>${newList.name} :</strong>
+                    <em>${newList.money} rs</em>
+                    <a href="#" class="secondary-content edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    </li>
+                    `
+                ul.appendChild(addedList);
+                this.clearValues();
+                this.showMoney();
+            }
+        },
 
-    addCurrentItem : function(){
-        document.querySelector("#item-name").value=Item.getCurrentItems().name;
-        document.querySelector("#money").value=Item.getCurrentItems().money;
-    },
+        showUpdatedList : function(updated){
+            
+            let li = document.querySelector(`#item-${updated.id}`);
+            li.innerHTML=`
+                <strong>${updated.name} :</strong>
+                    <em>${updated.money} rs</em>
+                    <a href="#" class="secondary-content edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a> `;
+            M.toast({
+                html : "Updated the item",
+                classes : "green darken-1"
+            });
+            this.showMoney();
+        },
 
-    showUpdatedItem : function(updated){
-    let list = document.getElementById(`item-${updated.id}`);
-    
-    list.innerHTML = `
-        <strong>${updated.name} :</strong>
-        <em>${updated.money} rs</em>
-        <a href="#" class="secondary-content edit">
-            <i class="fa-solid fa-pen-to-square"></i>
-        </a>
-    `
-}
+        afterDeletedItem : function(deletedItem){
 
-}
+            deletedItem.forEach(deleteItem=>{
+                let li = document.querySelector(`#item-${deleteItem.id}`);
+                li.remove();
+            });
+            M.toast({
+                html : "Deleted",
+                classes : "green darken-1"
+            });
+            this.showMoney();      
+            this.clearValues();      
+            this.clearState();
+        },
 
+        loadFromStorage :function(item){
+            let ul = document.querySelector("#group-item");
+            item.forEach(list=>{
+                let li = document.createElement("li");
+                li.innerHTML=`
+                <li class="collection-item" id="item-${list.id}">
+                    <strong>${list.name} :</strong>
+                    <em>${list.money} rs</em>
+                    <a href="#" class="secondary-content edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    </li>
+                `;
+                ul.appendChild(li);
+            });
+            this.showMoney();
+        },
+    }   
 })();
 
-//App Controller
-const App = (function App(){
+
+const AppCtrl = (function App(){
 
     const loadEvents = function(){
 
-        const editBtn = document.querySelector("#group-item");
-        editBtn.addEventListener("click",editClick);
+    const editBtn = document.querySelectorAll("#group-item");
+    editBtn.forEach(btn=>{
+        btn.addEventListener("click",editFunction);
+    });
 
-        const addBtn = document.querySelector(".add-btn");
-        addBtn.addEventListener("click",addFunction);
+    const addBtn = document.querySelector(".add-btn");
+    addBtn.addEventListener("click",addFunction);
 
-        const clearBtn = document.querySelector("#clear-btn");
-        clearBtn.addEventListener("click",clearFunction);
+    const backBtn = document.querySelector(".back-btn");
+    backBtn.addEventListener("click",backFunction);
 
-        const deleteBtn = document.querySelector(".delete-btn");
-        deleteBtn.addEventListener("click",deleteList);
+    const updateBtn = document.querySelector(".update-btn");
+    updateBtn.addEventListener("click",updateFunction);
 
-        const backBtn = document.querySelector(".back-btn");
-        backBtn.addEventListener("click",getBack);
+    const deleteBtn = document.querySelector(".delete-btn");
+    deleteBtn.addEventListener("click",deleteFunction);
 
-        const updateBtn = document.querySelector(".update-btn");
-        updateBtn.addEventListener("click",updateFunction);
-    }
-
-    const updateFunction = function(){
-
-        const updated = Item.updateItems();
-        //Getting total calculated money from ItemCtrl
-        const totMoney = Item.totalMoney();
-        Ui.showTotalMoney(totMoney);//Showing total money in Ui
-        Ui.showUpdatedItem(updated);
-
-        M.toast({
-    html: "Item Updated Successfully!",
-    classes: "blue darken-1 white-text rounded"
-});
-
-
-        
-    }
-
-    const getBack = function(){
-
-        Ui.clearState();
-
-        let itemName= document.querySelector("#item-name");
-        let money= document.querySelector("#money");
-
-        itemName.value="";
-        money.value="";
-    }
-
-    const deleteList= function(){
-
-        const getCurrent = Item.getCurrentItems();
-
-        Item.deleteItem(getCurrent.id);
-
-        Ui.deleteListItem(getCurrent.id);
-
-        StorageCtrl.deleteInStorage(getCurrent.id);
-
-        //Getting total calculated money from ItemCtrl
-        const totMoney = Item.totalMoney();
-        Ui.showTotalMoney(totMoney);//Showing total money in Ui
-
+    const clearBtn = document.querySelector("#clear-btn");
+    clearBtn.addEventListener("click",clearFunction);
     }
 
     const clearFunction = function(){
-        let list = document.querySelector(".collection");
-        
-        list.innerHTML=""; 
-
-        Item.clearItems();
-
-        //Getting total calculated money from ItemCtrl
-        const totMoney = Item.totalMoney();
-        Ui.showTotalMoney(totMoney);//Showing total money in Ui
-
+        ItemCtrl.clearAll();
+        let ul = document.querySelector("#group-item");
+        ul.innerHTML="";
         M.toast({
-                html: "Cleared All Items",
-                classes: "green darken-1 white-text rounded"
+                html : "Cleared All Items",
+                classes : "green darken-1"
             });
-        let itemName= document.querySelector("#item-name");
-        let money= document.querySelector("#money");
-
-        itemName.value="";
-        money.value="";
+            UICtrl.showMoney();      
+            UICtrl.clearValues();  
     }
-    
+
+    const deleteFunction = function(){
+        ItemCtrl.deleteItem();
+    }
+
+    const updateFunction = function(){
+        
+        const updateList = [
+            {
+                name : document.querySelector("#item-name").value,
+                money : parseInt(document.querySelector("#money").value)
+            }
+        ];
+        if(document.querySelector("#item-name").value ==="" || parseInt(document.querySelector("#money").value==="")){
+
+            M.toast({
+                html : "Please Enter your Updated Items",
+                classes : "red darken-1"
+            });
+
+        }
+        else{
+            ItemCtrl.updateItem(updateList);
+        }
+    }
+
+    const backFunction = function(){
+        UICtrl.clearState();
+        UICtrl.clearValues();
+    }
 
     const addFunction = function(){
+        const name = document.querySelector("#item-name").value;
+        const money = document.querySelector("#money").value;
 
-    let itemName= document.querySelector("#item-name");
-    let money= document.querySelector("#money");
-    const list =[
-        {name : itemName.value , amount : parseInt(money.value)}
-    ];
+        const addedItems = 
+            {name : name, money : parseInt(money)};
 
-        if(itemName.value ==="" || money.value===""){   
-            M.toast({
-                html: "⚠️ Please enter all fields!",
-                classes: "red darken-1 white-text rounded"
-            });
-        }else{
-            const items = Item.getList(list);
-            M.toast({
-            html: "Added Successfully!",
-            classes: "green white-text rounded"
-        });
-        }
-        itemName.value="";
-        money.value="";
+        const newItem = ItemCtrl.getNewItem(addedItems);
+        StorageCtrl.storeInLs(newItem);
 
-     //Getting total calculated money from ItemCtrl
-    const totMoney = Item.totalMoney();
-    Ui.showTotalMoney(totMoney);//Showing total money in Ui 
-    StorageCtrl.getAddedItem(list);
-}
-
-const editClick = function(e) {
-    if (e.target.closest(".edit")) {
-        console.log(e.target.parentElement.parentElement);
-        Ui.showState();
-
-        //Gettind Items ID
-        const deleteList = e.target.parentElement.parentElement.id;
-        const split = deleteList.split("-");
-        const id = parseInt(split[1]);
-        
-        const itemToEdit = Item.itemEdit(id);
-        
-        Item.setItems(itemToEdit);
-
-        Ui.addCurrentItem();
+       M.toast({
+        html : "Added Successfully!",
+        classes : "green darken-1"
+       })
     }
-}
+
+    const editFunction = function(e){
+        const itemId = e.target.parentElement.parentElement.id;
+
+        const getId = itemId.split("-");
+        const currentId = parseInt(getId[1]);
+        const id = ItemCtrl.editItem(currentId);
+
+        ItemCtrl.setItem(id);
+        UICtrl.showState();
+    }
 
     return {
-        init: function(){
-            const item = Item.getItems();
-            
-            if(item.length > 0 ){
-                Ui.getItemsInUi(item);
-                //Getting total calculated money from ItemCtrl
-                const totMoney = Item.totalMoney();
-                Ui.showTotalMoney(totMoney);//Showing total money in Ui
+        init : function(){
+             const storedTasks = localStorage.getItem("task");
+            if (storedTasks) {
+                StorageCtrl.loadInDOM();
+            } 
+            else{
+                const item = ItemCtrl.getItems();
+                if(item.length>0){
+                    UICtrl.showItems(item);
+                    UICtrl.showMoney();
+                }
             }
             loadEvents();
-        },
+        }
     }
-})();App.init();
+
+})();AppCtrl.init();
 
 document.addEventListener("DOMContentLoaded",function(){
-    Ui.clearState();
+    UICtrl.clearState();
 })
