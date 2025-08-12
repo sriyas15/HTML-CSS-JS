@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href=".//styles/checkout.css">
     <title>Checkout Page</title>
 </head>
@@ -13,50 +17,77 @@
             <div class="header-wrapper">
 
                 <nav class="header-nav">
-                    <img width="8%" src="./assets/logo/amazon-logo.png" alt="">
+                    <img width="10%" src="./assets/logo/amazon-logo.png" alt="">
                     <h3>Checkout (<span style="color: #017185;">3 items</span>)</h3>
                     <img  src="./assets/icons/checkout-lock-icon.png" alt="">
                 </nav>
 
             </div>
+        </div>
+    </header>
 
-            <div class="order">
+            <section class="order">
                 <div class="container">
                     <h1>Review your order</h1>
                     <div class="order-wrapper">
-
+                         
                         <div>
-                            <h2>Delivery date: Tuesday, June 21</h2>
-                            <div>
-                                <div>
-                                    <img width="99px" height="110px" src="./assets/products/blackout-curtains-black.jpg" alt="">
-                                </div>
-                                <div>
-                                    <h3><span class="text-break">Black and Gray Athletic Cotton Socks</span>
-                                     <span class="text-break">- 6 Pairs</span></h3>
-                                     <h4>₹599</h4>
-                                     <p id="cart-price">Quantity: 1</p>
-                                     <a href="#">Update</a>
-                                     <a href="#">Delete</a>
-                                </div>
-                                <div>
-                                    <strong>Choose a delivery option</strong>
-                                    <div class="delivery-option-date">
-                                     <input type="radio" checked class="delivery-option-input" name="delivery-option-1">
-                                    <span>Tuesday, June 21</span>
-                                    <p><span class="txt-break">FREE Shipping</span></p>
-                                    </div>
-                                </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                           
+                            <div class="products-in-cart">
 
+                                <div>
+                                    
+                                    <div>
+                                        <h2 id="delivery-date">Delivery date: Tuesday, June 21</h2>
+                                        <img width="99px" height="110px" src="./assets/products/blackout-curtains-black.jpg" alt="">
+                                    </div>
+                                    <div>
+                                        <h3><span class="text-break">Black and Gray Athletic Cotton Socks</span>
+                                        <span class="text-break">- 6 Pairs</span></h3>
+                                        <h4>₹599</h4>
+                                        <p id="product-quantity">Quantity: 1</p>
+                                        <a href="#">Update</a>
+                                        <a href="#">Delete</a>
+                                    </div>
+                                    <div class="delivery-option">
+                                        <strong>Choose a delivery option</strong>
+                                        <div class="delivery-option-date">
+                                        <input type="radio" checked class="delivery-option-input" name="delivery-option-1">
+                                        <span>Tuesday, June 21</span>
+                                        <p><span class="txt-break">FREE Shipping</span></p>
+                                        </div>
+
+                                        <div class="delivery-option-date">
+                                        <input type="radio" checked class="delivery-option-input" name="delivery-option-1">
+                                        <span>Wednesday, June 15</span>
+                                        <p><span class="txt-break">₹50 - Shipping</span></p>
+                                        </div>
+                                        
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="order-summary">
+                                <h2>Order Summary</h2>
+
+                                <span>Items (2) : <p id="right-align">₹599</p></span>
+                                <span>Shipping & handling : <p id="right-align">₹40</p></span>
+                                <span>Total before tax : <p id="right-align">₹639</p></span>
+                                <span>Estimated tax (10%) : <p id="right-align">₹50</p></span>
+
+                                <hr>
+
+                                <span id="order-total" style="color: #B12705;">Order total: <p style="color: #B12705;">₹689</p></span>
+                                <a id="order-btn" href="#">Place your order</a>
+                            </div>
+                            
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </header>
+
+            </section>
     
 </body>
 </html>
