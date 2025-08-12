@@ -32,6 +32,7 @@ const StorageCtrl = (function Storage(){
                 task = task.filter(item => item.id !== dItem.id);
             });
             localStorage.setItem("task", JSON.stringify(task));
+            
         },
 
         updateInStorage : function(updated){
