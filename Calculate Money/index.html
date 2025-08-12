@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <header class="head black white-text center">
+        <div class="container">
+            <h1>Money Calculator</h1>
+            <div class="divider"></div>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+
+            <div id="alert-div"></div>
+            
+            <button id="clear-btn" class="btn black right">Clear All</button>
+            <div class="card-panel top-section">
+                <div class="row">
+
+                <div class="col s6 input-field">
+                    <input id="item-name" type="text" value="test" class="validate">
+                    <label for="item">Item</label>
+                </div>
+
+                <div class="col s6 input-field">
+                    <input id="money" type="text" value="100" class="validate">
+                    <label for="money">Money</label>
+                </div>
+                
+                <button class="btn black add-btn"><i class="fa-regular fa-plus"></i>Add</button>
+                <button class="btn orange update-btn"><i class="fa-solid fa-pen"></i> Update</button>
+                <button class="btn red delete-btn"><i class="fa-solid fa-trash"></i> Delete</button>
+                <button class="btn grey back-btn"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            
+                </div>
+            
+            </div>
+
+            </div>
+
+            <div class="container">
+                <h2 class="center">Total Money : <span id="total-money">0</span><span> rs</span></h2>
+                <div class="card-panel bottom-section">
+                
+                <ul class="collection" id="group-item">
+
+                </ul>
+            
+            </div>
+            </div>
+    </section>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
