@@ -1,0 +1,14 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.container{
+    padding: 30px;
+    text-align: center;
+}
+
+.message{
+    margin-top: 20px;
+}

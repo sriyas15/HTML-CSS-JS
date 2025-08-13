@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chat-Bot</title>
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+
+<body>
+
+    <div class="root"></div>
+    
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+
+function ChatBotInput(){
+    return (
+        <>
+        <input type="text"/>
+        <button>Enter</button>
+        </>
+    )
+}
+
+function ChatMessage({msg,user}){
+        return(
+            <div className='message'>
+            {user === 'robot' && <img width='50px' src="./images/robot.png" alt=""/>}
+            {msg}
+            {user === 'user' && <img width='50px' src="./images/user.png" alt=""/>}
+            </div>
+        )
+}
+
+function App(){
+    return(
+
+    <div className="container">
+
+        <ChatBotInput/>
+
+        <ChatMessage msg="Hey there" user='user'/>
+
+        <ChatMessage msg="Yes! how can i help you" user='robot'/>
+
+        <ChatMessage msg="Whats the time now in india" user='user'/>
+
+        <ChatMessage msg="its 1:55 p.m" user='robot'/>
+
+        <ChatMessage msg="who are you?" user='user'/>
+
+        <ChatMessage msg="I am simply designed ChatBot here to help you" user='robot'/>
+
+        <ChatMessage msg="Ok, Thank You" user='user'/>
+
+        <ChatMessage msg="You 're welcome, feel free to ask anything." user='robot'/>
+
+    </div>
+
+    )
+}
+
+ReactDOM.createRoot(document.querySelector(".root")).render(<App/>)
+
+</script>
+</body>
+
+</html>
+
+
+
