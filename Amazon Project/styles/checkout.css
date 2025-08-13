@@ -29,9 +29,14 @@ a{
 
 .header-nav{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
+
+.header-nav a{
+    display: flex;
+}
+
 
 .header-wrapper{
     padding: 20px;
@@ -42,9 +47,12 @@ a{
 }
 
 .order-wrapper{
-    padding: 100px 0px;
+    padding: 50px 0px;
 }
 
+.order{
+    padding: 50px;
+}
 .order .container h1{
     font-size: 22px;
 }
