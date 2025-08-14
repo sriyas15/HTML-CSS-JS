@@ -34,6 +34,65 @@ function ChatMessage({msg,user}){
         )
 }
 
+function DynamicChat(){
+
+    const chatMessages = [
+    {
+        msg: 'Hey there',
+        user: 'user',
+        id : 0
+    },
+    {
+        msg: 'Yes! how can i help you',
+        user: 'robot',
+        id : 1
+    },
+    {
+        msg: 'Whats the time now in india',
+        user: 'user',
+        id : 2
+    },
+    {
+        msg: 'its 1:55 p.m',
+        user: 'robot',
+        id : 3
+    },
+    {
+        msg: 'who are you?',
+        user: 'user',
+        id : 4
+    },
+    {
+        msg: 'I am simply designed ChatBot here to help you',
+        user: 'robot',
+        id : 5
+    },
+    {
+        msg: 'Ok, Thank You',
+        user: 'user',
+        id : 6
+    },
+    {
+        msg: 'Youre welcome, feel free to ask anything',
+        user: 'robot',
+        id : 7
+    },
+]
+
+return(
+    chatMessages.map(messages=>(
+        <ChatMessage msg={messages.msg} 
+            user={messages.user} 
+            key={messages.id}
+            />
+    ))
+)
+}
+
+
+
+
+
 function App(){
     return(
 
@@ -41,21 +100,7 @@ function App(){
 
         <ChatBotInput/>
 
-        <ChatMessage msg="Hey there" user='user'/>
-
-        <ChatMessage msg="Yes! how can i help you" user='robot'/>
-
-        <ChatMessage msg="Whats the time now in india" user='user'/>
-
-        <ChatMessage msg="its 1:55 p.m" user='robot'/>
-
-        <ChatMessage msg="who are you?" user='user'/>
-
-        <ChatMessage msg="I am simply designed ChatBot here to help you" user='robot'/>
-
-        <ChatMessage msg="Ok, Thank You" user='user'/>
-
-        <ChatMessage msg="You 're welcome, feel free to ask anything." user='robot'/>
+        <DynamicChat/>
 
     </div>
 
