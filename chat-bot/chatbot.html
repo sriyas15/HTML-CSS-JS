@@ -15,11 +15,29 @@
 
 <script type="text/babel">
 
-function ChatBotInput(){
+function ChatBotInput({chatMessages,setChatMessages}){
+
+    const [input,setInput] = React.useState('');
+
+    const inputValue = function(e){
+        setInput(e.target.value);
+    }
+
+    const runClick = function(){
+        const newMesg = {
+        id:crypto.randomUUID(),
+        msg: input,
+        user : 'user'
+      }
+
+    setChatMessages([...chatMessages,newMesg]);
+    setInput('');
+    }
+
     return (
         <>
-        <input type="text"/>
-        <button>Enter</button>
+        <input onChange={inputValue} type="text"/>
+        <button onClick={runClick}>Enter</button>
         </>
     )
 }
@@ -34,9 +52,20 @@ function ChatMessage({msg,user}){
         )
 }
 
-function DynamicChat(){
+function DynamicChat({chatMessages}){
 
-   const array = React.useState([
+return(
+    chatMessages.map(messages=>(
+        <ChatMessage msg={messages.msg} 
+            user={messages.user} 
+            key={messages.id}
+        />
+    ))
+)
+}
+
+function App(){
+    const [chatMessages,setChatMessages] = React.useState([
     {
         msg: 'Hey there',
         user: 'user',
@@ -79,30 +108,15 @@ function DynamicChat(){
     },
 ])
 
-    const chatMessages = array[0];
-
-return(
-    chatMessages.map(messages=>(
-        <ChatMessage msg={messages.msg} 
-            user={messages.user} 
-            key={messages.id}
-            />
-    ))
-)
-}
-
-
-function App(){
     return(
-
     <div className="container">
 
-        <ChatBotInput/>
+        <ChatBotInput chatMessages={chatMessages}
+        setChatMessages={setChatMessages}/>
 
-        <DynamicChat/>
+        <DynamicChat chatMessages={chatMessages}/>
 
     </div>
-
     )
 }
 
