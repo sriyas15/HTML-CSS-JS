@@ -12,6 +12,7 @@
 <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
 
 <script type="text/babel">
 
@@ -24,20 +25,34 @@ function ChatBotInput({chatMessages,setChatMessages}){
     }
 
     const runClick = function(){
-        const newMesg = {
+    
+    const newMsg = [...chatMessages,{
         id:crypto.randomUUID(),
         msg: input,
         user : 'user'
+      }];
+
+    setChatMessages(newMsg);
+
+    const bot = Chatbot.getResponse(input);
+     const botMsg = {
+        id:crypto.randomUUID(),
+        msg: bot,
+        user : 'robot'
       }
 
-    setChatMessages([...chatMessages,newMesg]);
+    setChatMessages([...newMsg,botMsg]);
+
+
     setInput('');
     }
 
     return (
         <>
-        <input onChange={inputValue} type="text"/>
-        <button onClick={runClick}>Enter</button>
+        <div className={'input'}>
+            <input className={`input-field`} onChange={inputValue} type="text" value={input} placeholder='Send a message to chatbot'/>
+            <button className={`send-button`} onClick={runClick}>Enter</button>
+        </div>
         </>
     )
 }

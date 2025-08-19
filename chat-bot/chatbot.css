@@ -7,8 +7,38 @@
 .container{
     padding: 30px;
     text-align: center;
+    max-width: 600px;
+    margin: 0px auto;
 }
 
 .message{
     margin-top: 20px;
+}
+
+.input-field{
+    padding: 13px 15px;
+    border-radius: 10px;
+    /* width: 25%; */
+    border: 2px solid #ccc;
+    flex-grow: 1;
+}
+
+.input-field:focus{
+    border: 3px solid;
+    border-color: black;
+    transition: 2s;
+}
+
+.send-button{
+    padding: 15px;
+    border-radius: 13px;
+    background-color: #198754;
+    color: white;
+    border: none;
+    margin-left: 15px;
+}
+
+.input{
+    display: flex;
+    justify-content: center;
 }
