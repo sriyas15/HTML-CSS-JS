@@ -42,3 +42,11 @@
     display: flex;
     justify-content: center;
 }
+
+.user{
+    text-align: right;
+}
+
+.robot{
+    text-align: left;
+}

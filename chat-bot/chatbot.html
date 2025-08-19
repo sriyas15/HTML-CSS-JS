@@ -59,7 +59,7 @@ function ChatBotInput({chatMessages,setChatMessages}){
 
 function ChatMessage({msg,user}){
         return(
-            <div className='message'>
+            <div className={`message ${user}`}>
             {user === 'robot' && <img width='50px' src="./images/robot.png" alt=""/>}
             {msg}
             {user === 'user' && <img width='50px' src="./images/user.png" alt=""/>}
