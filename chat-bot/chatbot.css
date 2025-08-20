@@ -9,6 +9,10 @@
     text-align: center;
     max-width: 600px;
     margin: 0px auto;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .message{
@@ -41,12 +45,36 @@
 .input{
     display: flex;
     justify-content: center;
+    margin-bottom: 40px;
 }
 
 .user{
+    display: flex;
+    align-items: center;
+    justify-content: end;
     text-align: right;
 }
 
 .robot{
+    display: flex;
+    align-items: center;
+    justify-content: start;
     text-align: left;
+}
+
+.chatMsg {
+
+    background-color: rgb(238, 238, 238);   
+    padding: 15px 10px;
+    margin: 0px 10px;
+    border-radius: 10px;
+    max-width: 300px;
+}
+
+.chat-container{
+    flex-grow: 1;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow: scroll;
+    scrollbar-width: none;
 }

@@ -60,22 +60,33 @@ function ChatBotInput({chatMessages,setChatMessages}){
 function ChatMessage({msg,user}){
         return(
             <div className={`message ${user}`}>
-            {user === 'robot' && <img width='50px' src="./images/robot.png" alt=""/>}
-            {msg}
-            {user === 'user' && <img width='50px' src="./images/user.png" alt=""/>}
+            {user === 'robot' && <img width='45px' src="./images/robot.png" alt=""/>}
+            <span className={`chatMsg`}>{msg}</span>
+            {user === 'user' && <img width='45px' src="./images/user.png" alt=""/>}
             </div>
         )
 }
 
 function DynamicChat({chatMessages}){
+    const chatRef = React.useRef(null);
+
+    React.useEffect(()=>{
+    const containerElem = chatMessages.current;
+
+    if(containerElem){
+        containerElem.scrollTop = containerElem.scrollHeight;
+    }
+    },[chatMessages]);
 
 return(
-    chatMessages.map(messages=>(
+    <div className='chat-container' ref={chatRef}>
+       { chatMessages.map(messages=>(
         <ChatMessage msg={messages.msg} 
             user={messages.user} 
             key={messages.id}
         />
-    ))
+    ))}
+    </div>
 )
 }
 
@@ -126,10 +137,10 @@ function App(){
     return(
     <div className="container">
 
+        <DynamicChat chatMessages={chatMessages}/>
+
         <ChatBotInput chatMessages={chatMessages}
         setChatMessages={setChatMessages}/>
-
-        <DynamicChat chatMessages={chatMessages}/>
 
     </div>
     )
