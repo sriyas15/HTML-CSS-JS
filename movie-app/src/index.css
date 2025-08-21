@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+
+main{
+    width: 1200px;
+    min-height: 90vh;
+    margin: 0px auto;
+    padding: 10px;
+}
+
+*{
+    scrollbar-width: none;
+}
+
+header{
+    padding: 30px;
+}

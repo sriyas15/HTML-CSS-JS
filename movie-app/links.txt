@@ -1,0 +1,28 @@
+
+
+const options = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MzQwNGVhYjI3ODExNGMwN2NmNTVhODFkZDE0NWUwYyIsIm5iZiI6MTc1NTY3MjA4OC4wOTMsInN1YiI6IjY4YTU2ZTE4OTc0NDA1MDE1OWQ1NGE2NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4Nmjh8iG_xFFdWvgLi-QhDkwgQfvG1pg9BN8lZoRt68'
+  }
+};
+
+
+Now playing
+https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1
+
+Popular
+https://api.themoviedb.org/3/movie/popular?language=en-US&page=1
+
+Top
+https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1
+
+upcoming
+https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1
+
+details
+https://api.themoviedb.org/3/movie/{movie_id}?language=en-US
+
+search
+https://api.themoviedb.org/3/search/movie?query={movie_name}&include_adult=false&language=en-US&page=1
