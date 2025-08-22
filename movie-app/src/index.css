@@ -15,3 +15,18 @@ main{
 header{
     padding: 30px;
 }
+
+.mode{
+    color: white;
+    cursor: pointer;
+}
+
+.header-dark{
+    background-color: black;
+    color: white;
+}
+
+.header-light{
+    background-color: white;
+    color: black;
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-const useFetch = (apiPath) => {
+const useFetch = (apiPath,query = '') => {
 
     const [data,setData] = useState([]);
 
@@ -16,7 +16,7 @@ useEffect(()=>{
 
     async function getMovies(){
 
-      const request = await fetch(`https://api.themoviedb.org/3/${apiPath}?language=en-US&page=1`,options);
+      const request = await fetch(`https://api.themoviedb.org/3/${apiPath}?query=${query}&include_adult=false&language=en-US&page=1`,options);
       console.log(apiPath);
       const data = await request.json();
 

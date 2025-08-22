@@ -2,14 +2,19 @@ import './App.css'
 import AllRoutes from './routes/AllRoutes'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import DarkModeContext from './context/DarkModeContext'
 
 function App() {
 
   return (
     <>
-    <Header/>
-    <AllRoutes/>
-    <Footer/>
+    <DarkModeContext>
+
+      <Header/>
+      <AllRoutes/>
+      <Footer/>
+
+    </DarkModeContext>
     </>
   )
 }
