@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import Card from "../components/Card"
 import useFetch from "../hook/useFetch"
 
@@ -18,6 +17,7 @@ const {data:movies} = useFetch(apiPath);
                 <Card key={movie.id} movie={movie}/>
               ))
             }
+
         
         </div>
       </section>

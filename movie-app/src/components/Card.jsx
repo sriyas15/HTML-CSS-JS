@@ -6,7 +6,8 @@ const Card = ({movie}) => {
     const image = movie.poster_path ?`https://image.tmdb.org/t/p/w500/${movie.poster_path}` : BackUp;
 
   return (
-    <Link to={`movie/${movie.id}`}>
+    
+    <Link to={`/movie/${movie.id}`} state={{ movie, image }}>
     
     <div className="mx-auto max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <img src={image} alt="Bird" />  
