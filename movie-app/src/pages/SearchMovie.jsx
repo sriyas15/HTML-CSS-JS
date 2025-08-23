@@ -16,8 +16,14 @@ const SearchMovie = ({apiPath}) => {
 
   const {data:movies} = useFetch(apiPath,query);
 
+  console.log(movies);
+
   return (
     <main>
+
+      <section>
+        <p className="text-3xl ml-3">{movies.length === 0 ? `No results found for (${query})` : `Results for (${query})`}</p>
+      </section>
 
       <section >
 
