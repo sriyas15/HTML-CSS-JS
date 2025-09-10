@@ -1,0 +1,114 @@
+/* Light Mode */
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --heading-color: #111111;
+  --link-color: #1a73e8;
+  --border-color: #e0e0e0;
+  --card-bg: #f9f9f9;
+  --hover-bg: #e8f0fe;
+
+  --button1-bg: #1a73e8;   
+  --button1-text: #ffffff;
+  --button2-bg: #34a853;   
+  --button2-text: #ffffff;
+}
+
+/* Dark Mode */
+.darkmode {
+  --background-color: #121212;
+  --text-color: #e0e0e0;
+  --heading-color: #ffffff;
+  --link-color: #8ab4f8;
+  --border-color: #333333;
+  --card-bg: #1e1e1e;
+  --hover-bg: #2a2a2a;
+
+  --button1-bg: #8ab4f8;   
+  --button1-text: #000000;
+  --button2-bg: #57d18a;   
+  --button2-text: #000000;
+  
+}
+
+/* Global Styles */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: sans-serif;
+  text-align: center;
+  padding: 2rem;
+}
+
+h1 {
+  color: var(--heading-color);
+  margin-bottom: 1rem;
+}
+
+p {
+  color: var(--text-color);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* For Smooth Transition */
+body, h1, p, a, #theme-toggle {
+  transition: background-color 0.4s ease, color 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+}
+
+
+/* Toggle Button */
+#theme-toggle {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+/* Show only the correct icon */
+#dark-icon {
+  display: none;
+}
+.darkmode #light-icon {
+  display: none;
+}
+.darkmode #dark-icon {
+  display: inline;
+}
+
+/* Link Buttons */
+#btn-1, #btn-2 {
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  transition: 0.3s;
+  text-decoration: none;
+  display: inline-block;
+  margin: 5px;
+}
+
+/* Button 1 */
+#btn-1 {
+  background-color: var(--button1-bg);
+  color: var(--button1-text);
+}
+#btn-1:hover {
+  filter: brightness(90%);
+  transform: scale(1.05);
+}
+
+/* Button 2 */
+#btn-2 {
+  background-color: var(--button2-bg);
+  color: var(--button2-text);
+}
+#btn-2:hover {
+  filter: brightness(90%);
+  transform: scale(1.05);
+}
+
+/* Buttons wrapper */
+#buttons {
+  margin-top: 25px;
+}
