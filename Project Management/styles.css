@@ -1,0 +1,61 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+}
+
+.container{
+    max-width: 1250px;
+    margin: 0px auto;
+}
+
+.header-wrapper{
+    display: flex;
+    justify-content:space-evenly;
+    padding: 20px;
+    
+}
+
+.first-nav{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.first-nav a{
+    color: #5C5F6E;
+}
+
+.sec-nav{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sec-nav a {
+    color: #5C5F6E;
+}
+
+#sign-btn{
+
+    color: black;
+    background-color: white ;
+    padding: 10px 15px;
+    border-radius: 15px ;
+    font-weight: 800;
+    border-color: black;
+    border-style: solid;
+}
+
+#create-btn{
+
+    color: white;
+    background-color:#651FFF ;
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-weight: 800;
+}
